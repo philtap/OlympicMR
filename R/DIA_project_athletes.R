@@ -15,10 +15,7 @@ library(data.table)
 #                  Read the dataset
 ########################################################################
 
-
-setwd("C:/Users/philippet/OneDrive - Datalex/NCIRL/Modules/Data intensive architectures/Project/MR-Olympic-R")
-
-getwd()
+# The script assumes that the athlete_events.csv file is in the same directory
 
 athleteData <- read.csv("athlete_events.csv", header=T, na.strings=c(""), stringsAsFactors = F)
 
