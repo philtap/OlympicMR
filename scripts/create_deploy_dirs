@@ -1,0 +1,15 @@
+
+#cd ~
+#mkdir deploy
+#cd deploy
+#mkdir OlympicMR1
+#cd OlympicMR1
+#mkdir data
+#mkdir src
+#mkdir out
+cd ~/deploy
+mkdir OlympicMR2
+cd OlympicMR2
+mkdir data
+mkdir src
+mkdir out
