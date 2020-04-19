@@ -13,31 +13,22 @@ import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author PHILIPPET
  */
 
 public class OlympicMR1 {
-    // --------------------------------------
-    // This is version 2.0 of the code
-    // --------------------------------------
 
 
     public static class MedalMapper extends Mapper<LongWritable, Text, Text, Text> {
 
-//        Receives one record of the summer medals file (summer_medals.csv)  at a time
+//        The mapper Receives one record of the summer medals file (summer_medals.csv) at a time
 //        (a key, a line of text)
-//            "Year","City","Sport","Discipline","Athlete","Country","Gender","Event","Medal","OlympicEvent","EventGender"
-//            1992	Barcelona	Basketball	Basketball	Jordan, Michael	    USA	        Men	    Basketball	Gold Basketball-Basketball-Basketball  Men
-
-//        it needs to split the record, and return
+//         Year     City        Sport       Discipline  Athlete          Country  Gender  Event         Medal   OlympicEvent                       EventGender
+//         1992	    Barcelona	Basketball	Basketball	Jordan, Michael	 USA	  Men	  Basketball	Gold    Basketball-Basketball-Basketball   Men
+//
+//        It needs to split the record, and return
 //         - Key: the Year
 //         - Value: a String composed of the Country then Event,Gender,then Medal
 //            Year         Country,EventGender,Medal
@@ -50,43 +41,32 @@ public class OlympicMR1 {
         public void map(LongWritable key, Text value, Context context)
                 throws IOException, InterruptedException {
 
-            // System.out.println( "MedalMapper-Start");
-
+            // Get a row/line from the file
             String line = value.toString();
-            //System.out.println( "MedalMapper-line="+ line);
 
+            // Split it into fields
             String[] field = line.split(",");
 
             // Get year
             String year = field[0];
-            //System.out.println("MedalMapper-year=" + year);
+
             // Get country code
             String country = field[5];
-            //System.out.println( "MedalMapper-country="+ country);
 
             String olympicEvent = field[9];
-            //System.out.println( "MedalMapper-event="+ olympicEvent);
 
             String eventGender = field[10];
-            //System.out.println( "gender="+ eventGender);
 
             String medal = field[8];
-            // System.out.println( "MedalMapper - medal="+ medal);
-
-            //String yearCountry = year + "-" + country;
 
             String event = olympicEvent + "-" + eventGender;
 
             String countryResult = country + "," + event + "," + medal;
 
-            //System.out.println("MedalMapper  - countryResult=" + countryResult);
-
             if (!country.equals("Country")) {
                 // This is not the header row, write
                 context.write(new Text("Year-" + year), new Text(countryResult));
             }
-
-            //System.out.println( "MedalMapper - End ");
         }
     }
 
@@ -331,7 +311,6 @@ public class OlympicMR1 {
                     System.out.println( rankStr + countryStr+ totalMedalStr);
                     multipleOutputs.write(new Text(rankStr + countryStr), new Text(totalMedalStr), filename);
                 }
-            //}
 
 
             //-----------------------------------------------------------------------------------------------
