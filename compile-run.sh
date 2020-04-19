@@ -6,8 +6,8 @@
 # This script takes 4 parameters:
 # Parameter 1 : Name of folder in projects : e.g. OlypmpicMR1
 # Parameter 2 : Name of class : OlympicMR2
-# Parameter 2 : Input directory in hdfs:  OlypmpicMR2-in
-# Parameter 3 : Output directory in hdfs:  OlypmpicMR2-out
+# Parameter 3 : Input directory in hdfs:  OlympicMR2-in
+# Parameter 4 : Output directory in hdfs:  OlympicMR2-out
 #
 # The script automates the run of the OlympicMR1 or OlympicMR2 map reduce
 #
@@ -22,10 +22,34 @@
 # - compile and run the main class provided by parameter 2
 # - copy the Map Reduce outputs from HDFS to the file system
 
+echo
+echo #################################################################
+echo     compile-run.ksh
+echo  ################################################################
+echo Check compile-run-$2.log for the log
+
+
+# Log output to file
+exec &> compile-run-$2.log
+
+echo #################################################################
+echo     compile-run.ksh
+echo  ################################################################
+now=$(date)
+echo "$now"
+
+echo  Parameter 1 : Name of folder in projects : $1
+echo  Parameter 2 : Name of class : $2
+echo  Parameter 3 : Input directory in hdfs:  $3
+echo  Parameter 4 : Output directory in hdfs:  $4
+
 # Copy the necessary files
 echo Go to home directory for hduser
 
 cd ~
+
+now=$(date)
+echo "$now"
 
 echo --------------------------------------------
 echo Setup the deploy directory
@@ -65,6 +89,8 @@ starth.sh
 echo Current location...
 pwd
 
+now=$(date)
+echo "$now"
 echo --------------------------------------------
 echo Clear directories and files from hdfs...
 echo --------------------------------------------
@@ -96,6 +122,9 @@ hdfs dfs -mkdir $3
 cd ~/deploy/$2/data/
 
 sudo chmod 777 *
+
+now=$(date)
+echo "$now"
 echo --------------------------------------------
 echo Copy data file to the hdfs input directory...
 echo --------------------------------------------
@@ -108,10 +137,11 @@ hdfs dfs -ls $3
 echo Move to the src directory for execution
 cd ~/deploy/$2/src/
 
+now=$(date)
+echo "$now"
 echo --------------------------------------------
 echo Execution...
 echo --------------------------------------------
-
 
 echo Compile...
 hadoop com.sun.tools.javac.Main *.java
@@ -124,7 +154,12 @@ hadoop jar $2.jar $2 $3 $4
 
 hdfs dfs -ls $4
 
+now=$(date)
+echo "$now"
 echo ----------------------------------------------------
 echo Get the output file from hdfs to the file system...
 echo -----------------------------------------------------
 hdfs dfs -get $4/* ~/deploy/$2/out/
+
+now=$(date)
+echo "$now"
