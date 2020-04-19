@@ -270,48 +270,20 @@ medalData$EventGender [Sport == 'Equestrian' ] <- 'Mixed'
 medalData  [Sport == 'Equestrian' & Year == 2012 , ] 
 
 
-########################################################
-# TO DO : Look for other Mixed sports 
-########################################################
-
 #############################################################
-# 4. Mixed-sex sailing at the Summer Olympics - TO DO
-#############################################################
-medalData  [Sport == 'Sailing' & Year == 2012 , ]
-
-# In 2016 Nacra17	event was mixed 
-# In 2012 no mixed event
-# In 2008 - possibly mixed events
-
-#############################################################
-# 5. Mixed-sex shooting at the Summer Olympics  - TO DO
+# 4. Mixed-sex sailing at the Summer Olympics
 #############################################################
 
-medalData  [Sport == 'Shooting' , ] 
+# All mixed sailing events are indvidual so no action
+# In 2016 Nacra17	event was mixed : NA here
 
-# After 1992 - no mixed events
+#############################################################
+# 5. Mixed-sex shooting at the Summer Olympics
+#############################################################
 
-# 1984-1992 - mixed
-# Shotgun
-# Trap	mixed
-# Skeet	mixed
+# All mixed sailing events are individual so no action
 
-# Before 1980 - All mixed
-# 
-# Rifle
-# 50 m rifle three positions	mixed
-# 50 m rifle prone	mixed
-# 
-# Pistol
-# 50 m pistol	mixed
-# 25 m rapid fire pistol	mixed
-# 
-# Shotgun
-# Trap	mixed
-# Skeet	mixed
-# 
-# Running target
-# 50 m running target	mixed
+sapply(medalData,function(x) sum(is.na(x)))
 
 sapply(medalData,function(x) sum(is.na(x)))
 
