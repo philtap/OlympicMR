@@ -179,30 +179,13 @@ medalData [medalData$Athlete == 'Pending', ]
 #                  DATA CLEANUP (data anomalies)
 ########################################################################
 
-# 1) The following entry causes issues with csv, correct the Athlete name
+# The following entry causes issues with csv, correct the Athlete name
 # 1900,Paris,Rugby,Rugby,BINOCHE Jean, LÃ©on,FRA,Men,Rugby,Gold,Rugby Rugby Rugby,Men
 
 medalData [medalData$Athlete == 'BINOCHE Jean, LÃfÂ©on', ]
 
 medalData[25036, ]['Athlete'] <- 'BINOCHE Jean'
 medalData [medalData$Athlete == 'BINOCHE Jean', ]
-
-# 2) Issue with the event: Epée - it is 'mispelled' Ã???pÃ©e, which causes issues 
-medalData [medalData$Sport == 'Fencing', ]
-
-# Show the rows causing an issue 
-grep ("Ã???pÃ©e" , medalData$Event )
-
-# Here is one of the rows causing an issue 
-str_detect(medalData[30144, ]['Event'], "Ã???pÃ©e") 
-medalData[30144, ]
-
-medalData$Event <- str_replace_all(medalData$Event, "Ã???pÃ©e", "Epee")
-
-
-# Verify if changed
-grep ("Ã???pÃ©e" , medalData$Event )
-medalData[30144, ]
 
 
 ########################################################################################
