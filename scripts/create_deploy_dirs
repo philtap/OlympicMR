@@ -1,4 +1,5 @@
 
+# To run as hduser
 cd ~
 mkdir deploy
 cd deploy
